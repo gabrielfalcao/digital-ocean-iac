@@ -1,48 +1,4 @@
 
-resource "digitalocean_record" "SOA1_codepoe_ms" {
-  domain = digitalocean_domain.codepoe_ms.name
-  name   = "@"
-  priority   = "0"
-  ttl   = "1800"
-  type   = "SOA"
-  value   = "1800"
-  weight   = "0"
-}
-
-
-resource "digitalocean_record" "NS1_codepoe_ms" {
-  domain = digitalocean_domain.codepoe_ms.name
-  name   = "@"
-  priority   = "0"
-  ttl   = "1800"
-  type   = "NS"
-  value   = "ns1.digitalocean.com"
-  weight   = "0"
-}
-
-
-resource "digitalocean_record" "NS2_codepoe_ms" {
-  domain = digitalocean_domain.codepoe_ms.name
-  name   = "@"
-  priority   = "0"
-  ttl   = "1800"
-  type   = "NS"
-  value   = "ns2.digitalocean.com"
-  weight   = "0"
-}
-
-
-resource "digitalocean_record" "NS3_codepoe_ms" {
-  domain = digitalocean_domain.codepoe_ms.name
-  name   = "@"
-  priority   = "0"
-  ttl   = "1800"
-  type   = "NS"
-  value   = "ns3.digitalocean.com"
-  weight   = "0"
-}
-
-
 resource "digitalocean_record" "codepoe_ms_codepoe_ms" {
   domain = digitalocean_domain.codepoe_ms.name
   name   = "@"
@@ -50,28 +6,6 @@ resource "digitalocean_record" "codepoe_ms_codepoe_ms" {
   ttl   = "300"
   type   = "A"
   value   = "164.90.240.88"
-  weight   = "0"
-}
-
-
-resource "digitalocean_record" "MX1_codepoe_ms" {
-  domain = digitalocean_domain.codepoe_ms.name
-  name   = "@"
-  priority   = "10"
-  ttl   = "300"
-  type   = "MX"
-  value   = "@"
-  weight   = "0"
-}
-
-
-resource "digitalocean_record" "mail_codepoe_ms" {
-  domain = digitalocean_domain.codepoe_ms.name
-  name   = "mail"
-  priority   = "15"
-  ttl   = "600"
-  type   = "MX"
-  value   = "@"
   weight   = "0"
 }
 

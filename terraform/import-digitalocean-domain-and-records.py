@@ -90,7 +90,8 @@ def load_records(domain):
     type_counter = Counter()
 
     for r in records:
-        name = r.get('name')
+        value = name = r.get('name')
+        r['value'] = value
         data = r.get('data')
         type_name = r.get('type')
         type_counter[type_name] +=1
@@ -106,7 +107,10 @@ def load_records(domain):
             else:
                 r['name'] = f'{type_name}{index}'
 
-        r['value'] = name
+        if type_name in ('NS', 'MX'):
+            r['value'] = f'{value}.'
+            continue
+
         yield r
 
 
