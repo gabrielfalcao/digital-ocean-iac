@@ -15,6 +15,9 @@ namespace:
 deploy:|  $(YAML) namespace
 	kubectl apply -f $(YAML)
 
+undeploy:|  $(YAML) namespace
+	kubectl delete -f $(YAML)
+
 .DEFAULT_GOAL	:= help
 
 .PHONY: main namespace deploy
