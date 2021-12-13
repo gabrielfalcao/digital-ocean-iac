@@ -13,6 +13,15 @@ terraform {
       source  = "digitalocean/digitalocean"
       version = "~> 2.0"
     }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = "1.13.0"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "2.3.0"
+    }
+
   }
 }
 
@@ -26,4 +35,19 @@ provider "digitalocean" {
   token             = var.do_token
   spaces_access_id  = var.do_spaces_access_id
   spaces_secret_key = var.do_spaces_secret_key
+}
+
+provider "kubernetes" {
+  config_path    = "~/.kube/config"
+  config_context = "do-fra1-falcaoit-prod"
+}
+
+
+provider "kubectl" {
+  # Same config as in kubernetes provider
+}
+provider "helm" {
+  kubernetes {
+    # Same config as in kubernetes provider
+  }
 }
