@@ -20,6 +20,7 @@ to automatically import everything into terraform
 """
 import os
 import re
+import time
 import sys
 import json
 import subprocess
@@ -86,6 +87,14 @@ def load_records(domain):
 
 
 def terraform_import(name_records, parent, domain, execute=False):
+    cmd = f"terraform import digitalocean_domain.{parent} {domain}"
+    print(cmd)
+    if execute:
+        if os.system(cmd) != 0:
+            print('oopsie')
+            time.sleep(1)
+
+
     for record in name_records:
         id = record["id"]
         name = record["name"]
@@ -93,7 +102,9 @@ def terraform_import(name_records, parent, domain, execute=False):
         cmd = f"terraform import digitalocean_record.{full_name} {domain},{id}"
         print(cmd)
         if execute:
-            os.system(cmd)
+            if os.system(cmd) != 0:
+                print('oopsie')
+                time.sleep(1)
 
 
 def terraform_generate_records(name_records, parent):
@@ -125,7 +136,7 @@ def main():
     terraform_generate_domain(domain, parent)
     records = load_records(domain)
     name_records = list(
-        filter(lambda record: not re.search(r"\W", record["name"]), records)
+        filter(lambda record: not re.search(r"[^a-z-]", record["name"]), records)
     )
 
     terraform_generate_records(name_records, parent)
