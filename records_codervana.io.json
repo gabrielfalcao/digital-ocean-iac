@@ -1,0 +1,90 @@
+[
+  {
+    "id": 99376807,
+    "type": "SOA",
+    "name": "@",
+    "data": "1800",
+    "priority": 0,
+    "port": 0,
+    "ttl": 1800,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 99376808,
+    "type": "NS",
+    "name": "@",
+    "data": "ns1.digitalocean.com",
+    "priority": 0,
+    "port": 0,
+    "ttl": 1800,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 99376809,
+    "type": "NS",
+    "name": "@",
+    "data": "ns2.digitalocean.com",
+    "priority": 0,
+    "port": 0,
+    "ttl": 1800,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 99376815,
+    "type": "NS",
+    "name": "@",
+    "data": "ns3.digitalocean.com",
+    "priority": 0,
+    "port": 0,
+    "ttl": 1800,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 99376970,
+    "type": "A",
+    "name": "@",
+    "data": "164.90.240.88",
+    "priority": 0,
+    "port": 0,
+    "ttl": 300,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 99376981,
+    "type": "CNAME",
+    "name": "test",
+    "data": "@",
+    "priority": 0,
+    "port": 0,
+    "ttl": 300,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 99376990,
+    "type": "CNAME",
+    "name": "py",
+    "data": "@",
+    "priority": 0,
+    "port": 0,
+    "ttl": 300,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 99377026,
+    "type": "CNAME",
+    "name": "keycloak",
+    "data": "@",
+    "priority": 0,
+    "port": 0,
+    "ttl": 300,
+    "weight": 0,
+    "flags": 0
+  }
+]
