@@ -1,0 +1,38 @@
+[
+  {
+    "id": "fc7eaea7-d57d-488a-af9a-a12704aa0b82",
+    "urn": "do:vpc:fc7eaea7-d57d-488a-af9a-a12704aa0b82",
+    "name": "default-nyc1",
+    "ip_range": "10.116.0.0/20",
+    "region": "nyc1",
+    "created_at": "2021-06-24T10:17:12Z",
+    "default": true
+  },
+  {
+    "id": "b7a49eaa-dc83-11e8-a3da-3cfdfea9f0d8",
+    "urn": "do:vpc:b7a49eaa-dc83-11e8-a3da-3cfdfea9f0d8",
+    "name": "default-ams3",
+    "ip_range": "10.133.0.0/16",
+    "region": "ams3",
+    "created_at": "2019-03-12T16:34:48Z",
+    "default": true
+  },
+  {
+    "id": "9ae56af2-dc84-11e8-80bc-3cfdfea9fba1",
+    "urn": "do:vpc:9ae56af2-dc84-11e8-80bc-3cfdfea9fba1",
+    "name": "default-nyc3",
+    "ip_range": "10.132.0.0/16",
+    "region": "nyc3",
+    "created_at": "2019-03-08T19:29:39Z",
+    "default": true
+  },
+  {
+    "id": "f6e022f3-dc84-11e8-8b13-3cfdfea9f160",
+    "urn": "do:vpc:f6e022f3-dc84-11e8-8b13-3cfdfea9f160",
+    "name": "default-fra1",
+    "ip_range": "10.135.0.0/16",
+    "region": "fra1",
+    "created_at": "2019-02-27T01:15:18Z",
+    "default": true
+  }
+]
