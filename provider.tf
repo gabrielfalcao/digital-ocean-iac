@@ -14,14 +14,10 @@ terraform {
       version = "~> 2.0"
     }
     kubectl = {
+      # https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs
       source  = "gavinbunney/kubectl"
       version = "1.13.0"
     }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.3.0"
-    }
-
   }
 }
 
