@@ -16,9 +16,10 @@ loader = DictLoader(
     {
         "droplet": """
 resource "digitalocean_droplet" "{{ resource_name }}" {
-  image  = "{{ image.name }}"
+  image  = "{{ image.id }}"
   name   = "{{ name }}"
-  region = "{{ region.name }}"
+  monitoring   = {{ monitoring }}
+  region = "{{ region.slug }}"
   size   = "{{ size.slug }}"
 }
 """.strip(),
@@ -53,6 +54,7 @@ def load_droplets():
     for droplet in json.loads(raw):
         id = droplet["id"]
         name = droplet["name"]
+        features = droplet.get("features", [])
         image_name = droplet.get("image", {}).get('name', '')
         if name.startswith("pool_") or 'kube' in image_name:
             # ignore kubernetes-managed nodes
@@ -60,6 +62,7 @@ def load_droplets():
 
         resource_name = name.replace('-', '_')
         droplet['resource_name'] = resource_name
+        droplet['monitoring'] = json.dumps('monitoring' in features)
         items.append(droplet)
 
     return sorted(items, key=lambda x: x['id'])
@@ -70,6 +73,7 @@ def terraform_import(droplets, execute=False):
         cmd = "terraform import digitalocean_droplet.{name} {id}".format(**droplet)
         print(cmd)
         if execute:
+            os.system("terraform state rm digitalocean_droplet.{name}".format(**droplet))
             if os.system(cmd) != 0:
                 time.sleep(1)
 
