@@ -20,6 +20,16 @@ resource "digitalocean_record" "private_falcao_it" {
   weight   = "0"
 }
 
+resource "digitalocean_record" "blog_falcao_it" {
+  domain = digitalocean_domain.falcao_it.name
+  name   = "blog"
+  priority   = "0"
+  ttl   = "300"
+  type   = "A"
+  value   = digitalocean_loadbalancer.k8s_cognodes.ip
+  weight   = "0"
+}
+
 
 resource "digitalocean_record" "api_falcao_it" {
   domain = digitalocean_domain.falcao_it.name
