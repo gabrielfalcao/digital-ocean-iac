@@ -1,4 +1,48 @@
 
+resource "digitalocean_record" "NS1_python_clinic" {
+  domain = digitalocean_domain.python_clinic.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "1800"
+  type   = "NS"
+  value   = "ns1.digitalocean.com"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "NS2_python_clinic" {
+  domain = digitalocean_domain.python_clinic.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "1800"
+  type   = "NS"
+  value   = "ns2.digitalocean.com"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "NS3_python_clinic" {
+  domain = digitalocean_domain.python_clinic.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "1800"
+  type   = "NS"
+  value   = "ns3.digitalocean.com"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "python_clinic_python_clinic" {
+  domain = digitalocean_domain.python_clinic.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "300"
+  type   = "A"
+  value   = "138.68.112.139"
+  weight   = "0"
+}
+
+
 resource "digitalocean_record" "stun_python_clinic" {
   domain = digitalocean_domain.python_clinic.name
   name   = "stun"

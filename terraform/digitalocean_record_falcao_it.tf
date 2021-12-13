@@ -1,4 +1,59 @@
 
+resource "digitalocean_record" "NS1_falcao_it" {
+  domain = digitalocean_domain.falcao_it.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "1800"
+  type   = "NS"
+  value   = "ns1.digitalocean.com"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "NS2_falcao_it" {
+  domain = digitalocean_domain.falcao_it.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "1800"
+  type   = "NS"
+  value   = "ns2.digitalocean.com"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "NS3_falcao_it" {
+  domain = digitalocean_domain.falcao_it.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "1800"
+  type   = "NS"
+  value   = "ns3.digitalocean.com"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "falcao_it_falcao_it" {
+  domain = digitalocean_domain.falcao_it.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "300"
+  type   = "A"
+  value   = "138.68.113.42"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "MX1_falcao_it" {
+  domain = digitalocean_domain.falcao_it.name
+  name   = "@"
+  priority   = "50"
+  ttl   = "600"
+  type   = "MX"
+  value   = "mail.falcao.it"
+  weight   = "0"
+}
+
+
 resource "digitalocean_record" "private_falcao_it" {
   domain = digitalocean_domain.falcao_it.name
   name   = "private"
@@ -281,6 +336,17 @@ resource "digitalocean_record" "ipfs_falcao_it" {
   ttl   = "300"
   type   = "CNAME"
   value   = "@"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "TXT1_falcao_it" {
+  domain = digitalocean_domain.falcao_it.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "3600"
+  type   = "TXT"
+  value   = "keybase-site-verification=d31-Lh0frlWRFFa1nq7VxfPKxzgwwyNe-UQ6ZajRSQ4"
   weight   = "0"
 }
 

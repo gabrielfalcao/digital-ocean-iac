@@ -1,4 +1,70 @@
 
+resource "digitalocean_record" "NS1_r131733_xyz" {
+  domain = digitalocean_domain.r131733_xyz.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "1800"
+  type   = "NS"
+  value   = "ns1.digitalocean.com"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "NS2_r131733_xyz" {
+  domain = digitalocean_domain.r131733_xyz.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "1800"
+  type   = "NS"
+  value   = "ns2.digitalocean.com"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "NS3_r131733_xyz" {
+  domain = digitalocean_domain.r131733_xyz.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "1800"
+  type   = "NS"
+  value   = "ns3.digitalocean.com"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "r131733_xyz_r131733_xyz" {
+  domain = digitalocean_domain.r131733_xyz.name
+  name   = "@"
+  priority   = "0"
+  ttl   = "300"
+  type   = "A"
+  value   = "138.197.185.65"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "MX1_r131733_xyz" {
+  domain = digitalocean_domain.r131733_xyz.name
+  name   = "@"
+  priority   = "100"
+  ttl   = "1800"
+  type   = "MX"
+  value   = "mail.r131733.xyz"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "MX2_r131733_xyz" {
+  domain = digitalocean_domain.r131733_xyz.name
+  name   = "@"
+  priority   = "50"
+  ttl   = "1800"
+  type   = "MX"
+  value   = "mail.r131733.xyz"
+  weight   = "0"
+}
+
+
 resource "digitalocean_record" "www_r131733_xyz" {
   domain = digitalocean_domain.r131733_xyz.name
   name   = "www"

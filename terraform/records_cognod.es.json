@@ -1,0 +1,123 @@
+[
+  {
+    "id": 100103688,
+    "type": "SOA",
+    "name": "@",
+    "data": "1800",
+    "priority": 0,
+    "port": 0,
+    "ttl": 1800,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 100103689,
+    "type": "NS",
+    "name": "@",
+    "data": "ns1.digitalocean.com",
+    "priority": 0,
+    "port": 0,
+    "ttl": 1800,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 100103690,
+    "type": "NS",
+    "name": "@",
+    "data": "ns2.digitalocean.com",
+    "priority": 0,
+    "port": 0,
+    "ttl": 1800,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 100103691,
+    "type": "NS",
+    "name": "@",
+    "data": "ns3.digitalocean.com",
+    "priority": 0,
+    "port": 0,
+    "ttl": 1800,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 102013567,
+    "type": "A",
+    "name": "@",
+    "data": "174.138.101.139",
+    "priority": 0,
+    "port": 0,
+    "ttl": 300,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 102013599,
+    "type": "CNAME",
+    "name": "app",
+    "data": "@",
+    "priority": 0,
+    "port": 0,
+    "ttl": 600,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 102013602,
+    "type": "CNAME",
+    "name": "api",
+    "data": "@",
+    "priority": 0,
+    "port": 0,
+    "ttl": 300,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 102024839,
+    "type": "CNAME",
+    "name": "data",
+    "data": "@",
+    "priority": 0,
+    "port": 0,
+    "ttl": 300,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 102024920,
+    "type": "CNAME",
+    "name": "mail",
+    "data": "@",
+    "priority": 0,
+    "port": 0,
+    "ttl": 600,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 102024924,
+    "type": "MX",
+    "name": "@",
+    "data": "mail.cognod.es",
+    "priority": 10,
+    "port": 0,
+    "ttl": 600,
+    "weight": 0,
+    "flags": 0
+  },
+  {
+    "id": 102140578,
+    "type": "MX",
+    "name": "@",
+    "data": "@",
+    "priority": 10,
+    "port": 0,
+    "ttl": 300,
+    "weight": 0,
+    "flags": 0
+  }
+]

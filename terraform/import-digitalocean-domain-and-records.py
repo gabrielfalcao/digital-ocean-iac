@@ -24,6 +24,7 @@ import time
 import sys
 import json
 import subprocess
+from collections import Counter
 from pathlib import Path
 from jinja2 import Environment, DictLoader, select_autoescape
 
@@ -34,7 +35,7 @@ loader = DictLoader(
         "record": """
 resource "digitalocean_record" "{{ name }}_{{ parent }}" {
   domain = digitalocean_domain.{{ parent }}.name
-  name   = "{{ name }}"
+  name   = "{{ value }}"
   priority   = "{{ priority }}"
   ttl   = "{{ ttl }}"
   type   = "{{ type }}"
@@ -74,6 +75,8 @@ def get_records_filepath(domain):
 
 
 def load_records(domain):
+    parent = domain.replace(".", "_")
+
     path = get_records_filepath(domain)
     if not path.exists():
         raw = subprocess.getoutput(
@@ -83,19 +86,39 @@ def load_records(domain):
     else:
         raw = path.open().read()
 
-    return json.loads(raw)
+    records = sorted(json.loads(raw), key=lambda x: int(x['id']))
+    type_counter = Counter()
+
+    for r in records:
+        name = r.get('name')
+        data = r.get('data')
+        type_name = r.get('type')
+        type_counter[type_name] +=1
+        index = type_counter[type_name]
+        if type_name in ('SOA', ):
+            continue
+        if name == '@':
+            if type_name == 'A':
+                if index > 1:
+                    continue
+
+                r['name'] = parent
+            else:
+                r['name'] = f'{type_name}{index}'
+
+        r['value'] = name
+        yield r
 
 
-def terraform_import(name_records, parent, domain, execute=False):
+def terraform_import(records, parent, domain, execute=False):
     cmd = f"terraform import digitalocean_domain.{parent} {domain}"
     print(cmd)
     if execute:
         if os.system(cmd) != 0:
-            print('oopsie')
             time.sleep(1)
 
 
-    for record in name_records:
+    for record in records:
         id = record["id"]
         name = record["name"]
         full_name = f"{name}_{parent}"
@@ -103,14 +126,13 @@ def terraform_import(name_records, parent, domain, execute=False):
         print(cmd)
         if execute:
             if os.system(cmd) != 0:
-                print('oopsie')
                 time.sleep(1)
 
 
-def terraform_generate_records(name_records, parent):
+def terraform_generate_records(records, parent):
     template = env.get_template("record")
     contents = "\n\n".join(
-        [template.render(**record, parent=parent) for record in name_records]
+        [template.render(**record, parent=parent) for record in records]
     )
     filename = f"digitalocean_record_{parent}.tf"
     with open(filename, "w") as fd:
@@ -134,13 +156,13 @@ def main():
     parent = domain.replace(".", "_")
 
     terraform_generate_domain(domain, parent)
-    records = load_records(domain)
+    records = list(load_records(domain))
     name_records = list(
         filter(lambda record: not re.search(r"[^a-z-]", record["name"]), records)
     )
 
-    terraform_generate_records(name_records, parent)
-    terraform_import(name_records, parent, domain, execute)
+    terraform_generate_records(records, parent)
+    terraform_import(records, parent, domain, execute)
 
 
 if __name__ == "__main__":
