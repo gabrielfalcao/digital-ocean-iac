@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: falcaoit-ghost-blog
+spec:
+  serviceName: falcaoit-ghost-blog
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      infra.cognod.es/service: falcaoit-ghost-blog
+
+
+  updateStrategy:
+    type: RollingUpdate
+
+  volumeClaimTemplates:
+  - metadata:
+      name: blog-falcaoit-content
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
+
+  template:
+    metadata:
+      labels:
+        infra.cognod.es/service: falcaoit-ghost-blog
+
+    spec:
+      containers:
+      - name: blog
+        image: ghost:alpine
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 2368
+        env:
+        - name: url
+          value: http://blog.falcao.it
+        volumeMounts:
+        - mountPath: /var/lib/ghost/content
+          name: blog-falcaoit-content
