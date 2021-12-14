@@ -12,7 +12,5 @@ spec:
       targetPort: 2368
       protocol: TCP
       name: ghost
-  externalIPs:
-    - 67.207.73.50
   selector:
     infra.cognod.es/service: falcaoit-ghost-blog
