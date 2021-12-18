@@ -26,7 +26,7 @@ resource "digitalocean_record" "blog_falcao_it" {
   priority   = "0"
   ttl   = "300"
   type   = "A"
-  value   = "10.245.201.145" #digitalocean_loadbalancer.k8s_cognodes.ip
+  value   = "159.223.25.97" #digitalocean_loadbalancer.k8s_cognodes.ip
   # k8s cluster ip: value   = digitalocean_kubernetes_cluster.cognodes.ipv4_address
   weight   = "0"
 }
