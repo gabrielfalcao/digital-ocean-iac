@@ -28,6 +28,8 @@ from collections import Counter
 from pathlib import Path
 from jinja2 import Environment, DictLoader, select_autoescape
 
+from resources import load_resources
+
 path = Path(__file__).parent
 
 loader = DictLoader(
@@ -153,8 +155,7 @@ def terraform_generate_domain(domain, parent):
     print(f"wrote {filename}")
 
 
-def main():
-    domain = parse_domain()
+def import_domain(domain):
     execute = should_execute_import()
 
     parent = domain.replace(".", "_")
@@ -168,6 +169,11 @@ def main():
     terraform_generate_records(records, parent)
     terraform_import(records, parent, domain, execute)
 
+
+def main():
+    resources = load_records()
+    for domain in resources['domain']:
+        import_domain(domain)
 
 if __name__ == "__main__":
     main()

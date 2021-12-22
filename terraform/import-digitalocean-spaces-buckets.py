@@ -2,6 +2,12 @@
 
 import os
 
+def should_execute_import():
+    if len(sys.argv) < 2:
+        return False
+    param = sys.argv[1]
+    return param.lower() in ("-x", "--execute", "--import")
+
 
 
 cmds = [
@@ -11,6 +17,13 @@ cmds = [
 "terraform import digitalocean_spaces_bucket.python-clinic nyc3,python-clinic",
 ]
 
-for cmd in cmds:
-    print(cmd)
-    os.system(cmd)
+
+def main():
+    for cmd in cmds:
+        print(cmd)
+        os.system(cmd)
+
+
+
+if __name__ == "__main__":
+    main()
