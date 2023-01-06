@@ -12,11 +12,13 @@ clean: cls
 
 import: clean
 	-terraform import digitalocean_kubernetes_cluster.cognodes a3e1e65a-5166-466a-8327-c90b3f6e426a
-	-python import-digitalocean-vpcs.py
-	-python import-digitalocean-droplets.py
-	-python import-digitalocean-spaces-buckets.py
-	-python import-digitalocean-domain-and-records.py
+	-python import-digitalocean-vpcs.py -x
+	-python import-digitalocean-droplets.py -x
+	-python import-digitalocean-spaces-buckets.py -x
+	-python import-digitalocean-domain-records.py -x
 
+
+plan: $(PLAN_TARGET)
 
 apply: $(PLAN_TARGET)
 	terraform apply $(PLAN_TARGET)

@@ -20,17 +20,6 @@ resource "digitalocean_record" "private_falcao_it" {
   weight   = "0"
 }
 
-resource "digitalocean_record" "blog_falcao_it" {
-  domain = digitalocean_domain.falcao_it.name
-  name   = "blog"
-  priority   = "0"
-  ttl   = "300"
-  type   = "A"
-  value   = "159.223.25.97" #digitalocean_loadbalancer.k8s_cognodes.ip
-  # k8s cluster ip: value   = digitalocean_kubernetes_cluster.cognodes.ipv4_address
-  weight   = "0"
-}
-
 
 resource "digitalocean_record" "api_falcao_it" {
   domain = digitalocean_domain.falcao_it.name
@@ -347,5 +336,16 @@ resource "digitalocean_record" "ssh_falcao_it" {
   ttl   = "300"
   type   = "A"
   value   = "142.93.100.215"
+  weight   = "0"
+}
+
+
+resource "digitalocean_record" "blog_falcao_it" {
+  domain = digitalocean_domain.falcao_it.name
+  name   = "blog"
+  priority   = "0"
+  ttl   = "300"
+  type   = "A"
+  value   = "159.223.25.97"
   weight   = "0"
 }

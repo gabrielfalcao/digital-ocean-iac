@@ -29,8 +29,11 @@ from pathlib import Path
 from jinja2 import Environment, DictLoader, select_autoescape
 
 from resources import load_resources
+from resources import should_execute_import
 
 path = Path(__file__).parent
+global_config = dict(enabled=False)
+
 
 loader = DictLoader(
     {
@@ -65,13 +68,6 @@ def parse_domain():
     return domain
 
 
-def should_execute_import():
-    if len(sys.argv) < 3:
-        return False
-    param = sys.argv[2]
-    return param.lower() in ("-x", "--execute", "--import")
-
-
 def get_records_filepath(domain):
     return path.joinpath(f"records_{domain}.json")
 
@@ -88,48 +84,69 @@ def load_records(domain):
     else:
         raw = path.open().read()
 
-    records = sorted(json.loads(raw), key=lambda x: int(x['id']))
+    def getid(x):
+        try:
+            return int(x["id"])
+        except TypeError as e:
+            err = e
+            import ipdb
+
+            ipdb.set_trace()
+
+    response = json.loads(raw)
+    if isinstance(response, dict) and "errors" in response:
+        print(response)
+        return []
+
+    records = sorted(response, key=getid)
     type_counter = Counter()
 
     for r in records:
-        value = name = r.get('name')
-        r['value'] = value
-        data = r.get('data')
-        type_name = r.get('type')
-        type_counter[type_name] +=1
+        value = name = r.get("name")
+        r["value"] = value
+        data = r.get("data")
+        type_name = r.get("type")
+        type_counter[type_name] += 1
         index = type_counter[type_name]
-        if type_name in ('SOA', ):
+        if type_name in ("SOA", "SRV"):
             continue
-        if name == '@':
-            if type_name == 'A':
+        if name == "@":
+            if type_name == "A":
                 if index > 1:
                     continue
 
-                r['name'] = parent
+                r["name"] = parent
             else:
-                r['name'] = f'{type_name}{index}'
+                r["name"] = f"{type_name}{index}"
 
-        if type_name in ('NS', 'MX'):
-            r['value'] = f'{value}.'
+        if type_name in ("NS", "MX"):
+            r["value"] = f"{value}."
             continue
 
         yield r
 
 
 def terraform_import(records, parent, domain, execute=False):
+
     cmd = f"terraform import digitalocean_domain.{parent} {domain}"
     print(cmd)
     if execute:
-        if os.system(cmd) != 0:
-            time.sleep(1)
-
+        if global_config['enabled']:
+            if os.system(cmd) != 0:
+                time.sleep(1)
 
     for record in records:
         id = record["id"]
         name = record["name"]
         full_name = f"{name}_{parent}"
+        if 'admin_python_clinic' in full_name:
+            global_config['enabled'] = True
+            import ipdb;ipdb.set_trace()
+
         cmd = f"terraform import digitalocean_record.{full_name} {domain},{id}"
         print(cmd)
+        if not global_config['enabled']:
+            continue
         if execute:
             if os.system(cmd) != 0:
                 time.sleep(1)
@@ -171,9 +188,10 @@ def import_domain(domain):
 
 
 def main():
-    resources = load_records()
-    for domain in resources['domain']:
+    resources = load_resources()
+    for domain in resources["domain"]:
         import_domain(domain)
+
 
 if __name__ == "__main__":
     main()

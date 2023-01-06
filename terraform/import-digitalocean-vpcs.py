@@ -9,6 +9,7 @@ import subprocess
 from collections import Counter
 from pathlib import Path
 from jinja2 import Environment, DictLoader, select_autoescape
+from resources import should_execute_import
 
 path = Path(__file__).parent
 
@@ -28,13 +29,6 @@ resource "digitalocean_vpc" "{{ resource_name }}" {
 env = Environment(loader=loader, autoescape=select_autoescape())
 
 
-def should_execute_import():
-    if len(sys.argv) < 2:
-        return False
-    param = sys.argv[1]
-    return param.lower() in ("-x", "--execute", "--import")
-
-
 def get_vpcs_filepath():
     return path.joinpath(f"vpcs.json")
 
@@ -42,9 +36,7 @@ def get_vpcs_filepath():
 def load_vpcs():
     path = get_vpcs_filepath()
     if not path.exists():
-        raw = subprocess.getoutput(
-            f"doctl vpcs list -o json"
-        )
+        raw = subprocess.getoutput(f"doctl vpcs list -o json")
         path.open("w").write(raw)
     else:
         raw = path.open().read()
@@ -53,11 +45,11 @@ def load_vpcs():
     for vpc in json.loads(raw):
         id = vpc["id"]
         name = vpc["name"]
-        resource_name = name.replace('-', '_')
-        vpc['resource_name'] = resource_name
+        resource_name = name.replace("-", "_")
+        vpc["resource_name"] = resource_name
         items.append(vpc)
 
-    return sorted(items, key=lambda x: x['id'])
+    return sorted(items, key=lambda x: x["id"])
 
 
 def terraform_import(vpcs, execute=False):
@@ -71,15 +63,11 @@ def terraform_import(vpcs, execute=False):
 
 def terraform_generate_vpcs(vpcs):
     template = env.get_template("vpc")
-    contents = "\n\n".join(
-        [template.render(**vpc) for vpc in vpcs]
-    )
+    contents = "\n\n".join([template.render(**vpc) for vpc in vpcs])
     filename = f"digitalocean_vpc.tf"
     with open(filename, "w") as fd:
         fd.write(contents)
     print(f"wrote {filename}")
-
-
 
 
 def main():
