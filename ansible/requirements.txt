@@ -1,2 +1,3 @@
 shade-inventory
 ansible
+xkcd
